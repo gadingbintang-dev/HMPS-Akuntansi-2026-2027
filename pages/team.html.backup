@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Organisasi - HMPS Akuntansi</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .team-structure {
+            padding: 100px 0 50px;
+            background-color: #ffffff;
+        }
+
+        .team-structure h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #11225B;
+            position: relative;
+        }
+
+        .team-structure h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #FFAF00;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        .org-chart {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .org-chart h2 {
+            color: #11225B;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .chart-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .org-chart-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-caption {
+            margin-top: 15px;
+            color: #555;
+            font-style: italic;
+        }
+
+
+
+        .position-group {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .position-group h3 {
+            color: #11225B;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .member-card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-photo {
+            flex: 0 0 150px;
+            background-color: #11225B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+
+        .member-info {
+            flex: 1;
+            padding: 25px;
+        }
+
+        .member-info h4 {
+            color: #000000 !important;
+            font-size: 1.3rem !important;
+            margin-bottom: 5px !important;
+        }
+
+        .position {
+            color: #000000 !important;
+            font-weight: 600 !important;
+            margin-bottom: 10px !important;
+            font-size: 1.1rem !important;
+        }
+
+        /* Pastikan semua nama dan jabatan berwarna hitam */
+        .member-info h4,
+        .member-card h4,
+        .member-info > h4,
+        .member-card > h4 {
+            color: #000000 !important;
+        }
+
+        .position,
+        .member-info .position,
+        .member-card .position,
+        .member-info > .position,
+        .member-card > .position {
+            color: #000000 !important;
+        }
+
+        .bio {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* Atur jarak antara nama dan jabatan */
+        .member-info h4 + .position,
+        .member-info > .position {
+            margin-top: -3px !important;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #e3f2fd;
+            color: #11225B;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background-color: #FFAF00;
+            color: #11225B;
+            transform: translateY(-2px);
+        }
+
+        .division-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .division-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            background-color: #f8f9fa;
+            color: #11225B;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background-color: #FFAF00;
+            color: white;
+            border-color: #FFAF00;
+        }
+
+        .toggle-btn.active {
+            background-color: #11225B;
+            color: white;
+            border-color: #11225B;
+            box-shadow: 0 4px 10px rgba(17, 34, 91, 0.3);
+        }
+
+        .toggle-btn.left-btn {
+            margin-right: 5px;
+        }
+
+        .toggle-btn.right-btn {
+            margin-left: 5px;
+        }
+
+        .position-group {
+            margin-bottom: 30px;
+        }
+
+        .position-group h4 {
+            color: #FFAF00;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            background-color: #11225B;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .scroll-to-top-btn:hover {
+            background-color: #FFAF00;
+            color: #11225B;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 98;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #11225B;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #FFAF00;
+            color: #11225B;
+        }
+
+        .nav-btn i {
+            font-size: 16px;
+        }
+
+        /* Styling untuk split division */
+        .division-split-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .division-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .division-buttons[data-parent] {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .division-content-container {
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .division-single {
+            display: none;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .division-single.active {
+            display: block;
+        }
+
+        .division-single.half-width {
+            display: inline-block;
+            width: calc(50% - 10px);
+            vertical-align: top;
+        }
+
+        .division-single.hidden {
+            display: none;
+        }
+
+        /* Tampilan untuk dua divisi bersamaan */
+        .division-content-container.two-visible {
+            display: flex;
+            gap: 20px;
+        }
+
+        .division-content-container.two-visible .division-single {
+            flex: 1;
+            width: calc(50% - 10px);
+        }
+
+        /* Warna untuk tombol toggle */
+        .toggle-btn {
+            background: #f8f9fa;
+            color: #11225B;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #FFAF00;
+            color: #11225B;
+            border-color: #FFAF00;
+        }
+
+        .toggle-btn.active {
+            background: #11225B;
+            color: white;
+            border-color: #11225B;
+            box-shadow: 0 4px 10px rgba(17, 34, 91, 0.3);
+        }
+
+        .toggle-btn.left-btn {
+            margin-right: 5px;
+        }
+
+        .toggle-btn.right-btn {
+            margin-left: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .division-content.split-container {
+                flex-direction: column;
+            }
+
+            .division-content.half-width {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="../images/logo.png" alt="Logo HMPS Akuntansi">
+                    <h2>HMPS Akuntansi</h2>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="../index.html" class="nav-link">Beranda</a>
+                    <a href="about.html" class="nav-link">Tentang</a>
+                    <a href="gallery.html" class="nav-link">Galeri</a>
+                    <a href="team.html" class="nav-link active">Struktur Organisasi</a>
+                    <a href="contact.html" class="nav-link">Kontak</a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Team Structure Section -->
+        <section class="team-structure">
+            <div class="container">
+                <h1>Struktur Organisasi HMPS Akuntansi</h1>
+                <p class="subtitle">Berikut adalah susunan kepengurusan HMPS Akuntansi periode saat ini</p>
+                
+                <div class="org-chart">
+                    <h2>Bagan Struktur Organisasi</h2>
+                    <div class="chart-container">
+                        <img src="https://placehold.co/800x600/3498db/ffffff?text=Struktur+Organisasi+HMPS+Akuntansi" alt="Bagan Struktur Organisasi HMPS Akuntansi" class="org-chart-img">
+                        <p class="chart-caption">Gambar di atas menunjukkan bagan struktur organisasi HMPS Akuntansi secara keseluruhan</p>
+                    </div>
+                </div>
+
+                <!-- Leadership Section -->
+                <div class="leadership-section">
+                    <div class="position-group">
+                        <h3>Direktur</h3>
+
+                        <div class="member-card">
+                            <div class="member-photo">
+                                <img src="https://placehold.co/150x150/3498db/ffffff?text=Direktur" alt="Foto Direktur">
+                            </div>
+                            <div class="member-info">
+                                <h4>Raihan Rifa Maharaditya</h4>
+                                <p class="position">Direktur HMPS Akuntansi</p>
+                                <p class="bio">Bertanggung jawab atas keseluruhan organisasi dan pengambilan keputusan strategis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-group" id="wadir1-section">
+                        <h3 id="wadir1">Wakil Direktur I - Pendidikan dan Riset</h3>
+                        
+                        <div class="member-card">
+                            <div class="member-photo">
+                                <img src="https://placehold.co/150x150/e74c3c/ffffff?text=Wadir+1" alt="Foto Wakil Direktur 1">
+                            </div>
+                            <div class="member-info">
+                                <h4>Vina Okita</h4>
+                                <p class="position">Wakil Direktur 1 HMPS Akuntansi</p>
+                                <p class="bio">Bertanggung jawab atas bidang Pendidikan dan Riset dalam organisasi.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="division-split-container">
+                            <div class="division-buttons" data-parent="wadir1">
+                                <button class="toggle-btn left-btn active" onclick="toggleDivision('division1-pendidikan')">Divisi Pendidikan</button>
+                                <button class="toggle-btn right-btn" onclick="toggleDivision('division1-riset')">Divisi Riset</button>
+                            </div>
+
+                            <div class="division-content-container" data-parent="wadir1">
+                                <div id="division1-pendidikan" class="division-single active">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+Pendidikan" alt="Foto Kepala Divisi Pendidikan">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Arelia Salsabila Safitri</h4>
+                                                <p class="position">Kepala Divisi Pendidikan</p>
+                                                <p class="bio">Bertanggung jawab atas program-program pendidikan dan pelatihan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Pendidikan+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Marlina Dwi Saputri</h4>
+                                                <p class="position">Staff Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Pendidikan+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Pendidikan 2</h4>
+                                                <p class="position">Staff Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 1</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 2</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 3</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+4" alt="Foto Anggota Divisi 4">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 4</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota4.pendidikan@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota4.pendidikan@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+5" alt="Foto Anggota Divisi 5">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 5</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota5.pendidikan@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota5.pendidikan@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Pendidikan+6" alt="Foto Anggota Divisi 6">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Pendidikan 6</h4>
+                                                <p class="position">Anggota Divisi Pendidikan</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program pendidikan.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota6.pendidikan@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota6.pendidikan@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="division1-riset" class="division-single hidden">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+Riset" alt="Foto Kepala Divisi Riset">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Kepala Divisi Riset</h4>
+                                                <p class="position">Kepala Divisi Riset</p>
+                                                <p class="bio">Bertanggung jawab atas penelitian dan pengembangan dalam bidang akuntansi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:kadiv.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> kadiv.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Riset+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Riset 1</h4>
+                                                <p class="position">Staff Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff1.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff1.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Riset+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Riset 2</h4>
+                                                <p class="position">Staff Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff2.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff2.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Riset+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Riset 1</h4>
+                                                <p class="position">Anggota Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota1.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota1.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Riset+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Riset 2</h4>
+                                                <p class="position">Anggota Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota2.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota2.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Riset+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Riset 3</h4>
+                                                <p class="position">Anggota Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota3.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota3.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Riset+4" alt="Foto Anggota Divisi 4">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Riset 4</h4>
+                                                <p class="position">Anggota Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota4.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota4.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Riset+5" alt="Foto Anggota Divisi 5">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Riset 5</h4>
+                                                <p class="position">Anggota Divisi Riset</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program riset dan penelitian.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota5.riset@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota5.riset@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="position-group" id="wadir2-section">
+                        <h3 id="wadir2">Wakil Direktur II - Sekretaris dan Bendahara</h3>
+                        
+                        <div class="member-card">
+                            <div class="member-photo">
+                                <img src="https://placehold.co/150x150/e74c3c/ffffff?text=Wadir+2" alt="Foto Wakil Direktur 2">
+                            </div>
+                            <div class="member-info">
+                                <h4>Nama Lengkap</h4>
+                                <p class="position">Wakil Direktur 2 HMPS Akuntansi</p>
+                                <p class="bio">Bertanggung jawab atas bidang Administrasi, Sekretariat, dan Keuangan.</p>
+                                <div class="contact-info">
+                                    <a href="mailto:wadir2@hmpsakuntansi.ac.id" class="contact-link">
+                                        <i class="fas fa-envelope"></i> wadir2@hmpsakuntansi.ac.id
+                                    </a>
+                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="division-split-container">
+                            <div class="division-buttons" data-parent="wadir2">
+                                <button class="toggle-btn left-btn active" onclick="toggleDivision('division2-sekretaris')">Divisi Sekretaris</button>
+                                <button class="toggle-btn right-btn" onclick="toggleDivision('division2-bendahara')">Divisi Bendahara</button>
+                            </div>
+
+                            <div class="division-content-container" data-parent="wadir2">
+                                <div id="division2-sekretaris" class="division-single active">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+Sekretaris" alt="Foto Kepala Divisi Sekretaris">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Kepala Divisi Sekretaris</h4>
+                                                <p class="position">Kepala Divisi Sekretaris</p>
+                                                <p class="bio">Bertanggung jawab atas administrasi dan manajemen dokumen organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:kadiv.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> kadiv.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Sekretaris+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Sekretaris 1</h4>
+                                                <p class="position">Staff Divisi Sekretaris</p>
+                                                <p class="bio">Bertugas dalam mendukung kegiatan administrasi dan dokumentasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff1.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff1.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Sekretaris+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Sekretaris 2</h4>
+                                                <p class="position">Staff Divisi Sekretaris</p>
+                                                <p class="bio">Bertugas dalam mendukung kegiatan administrasi dan dokumentasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff2.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff2.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Sekretaris+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Sekretaris 1</h4>
+                                                <p class="position">Anggota Divisi Sekretaris</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program sekretariat.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota1.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota1.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Sekretaris+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Sekretaris 2</h4>
+                                                <p class="position">Anggota Divisi Sekretaris</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program sekretariat.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota2.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota2.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Sekretaris+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Sekretaris 3</h4>
+                                                <p class="position">Anggota Divisi Sekretaris</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program sekretariat.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota3.sekretaris@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota3.sekretaris@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="division2-bendahara" class="division-single hidden">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+Bendahara" alt="Foto Kepala Divisi Bendahara">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Kepala Divisi Bendahara</h4>
+                                                <p class="position">Kepala Divisi Bendahara</p>
+                                                <p class="bio">Bertanggung jawab atas pengelolaan keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:kadiv.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> kadiv.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Bendahara+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Bendahara 1</h4>
+                                                <p class="position">Staff Divisi Bendahara</p>
+                                                <p class="bio">Bertugas dalam mendukung pengelolaan keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff1.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff1.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Bendahara+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Bendahara 2</h4>
+                                                <p class="position">Staff Divisi Bendahara</p>
+                                                <p class="bio">Bertugas dalam mendukung pengelolaan keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff2.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff2.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Bendahara+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Bendahara 1</h4>
+                                                <p class="position">Anggota Divisi Bendahara</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota1.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota1.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Bendahara+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Bendahara 2</h4>
+                                                <p class="position">Anggota Divisi Bendahara</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota2.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota2.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Bendahara+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Bendahara 3</h4>
+                                                <p class="position">Anggota Divisi Bendahara</p>
+                                                <p class="bio">Bertugas dalam mendukung program-program keuangan organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota3.bendahara@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota3.bendahara@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-group" id="wadir3-section">
+                        <h3 id="wadir3">Wakil Direktur III - PSDM dan Kominfo</h3>
+                        
+                        <div class="member-card">
+                            <div class="member-photo">
+                                <img src="https://placehold.co/150x150/e74c3c/ffffff?text=Wadir+3" alt="Foto Wakil Direktur 3">
+                            </div>
+                            <div class="member-info">
+                                <h4>Nama Lengkap</h4>
+                                <p class="position">Wakil Direktur 3 HMPS Akuntansi</p>
+                                <p class="bio">Bertanggung jawab atas bidang Pengembangan Sumber Daya Manusia dan Komunikasi Informasi.</p>
+                                <div class="contact-info">
+                                    <a href="mailto:wadir3@hmpsakuntansi.ac.id" class="contact-link">
+                                        <i class="fas fa-envelope"></i> wadir3@hmpsakuntansi.ac.id
+                                    </a>
+                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="division-split-container">
+                            <div class="division-buttons" data-parent="wadir3">
+                                <button class="toggle-btn left-btn active" onclick="toggleDivision('division3-psdm')">Divisi PSDM</button>
+                                <button class="toggle-btn right-btn" onclick="toggleDivision('division3-kominfo')">Divisi Kominfo</button>
+                            </div>
+
+                            <div class="division-content-container" data-parent="wadir3">
+                                <div id="division3-psdm" class="division-single active">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+PSDM" alt="Foto Kepala Divisi PSDM">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Kepala Divisi PSDM</h4>
+                                                <p class="position">Kepala Divisi PSDM</p>
+                                                <p class="bio">Bertanggung jawab atas pengembangan kapasitas dan kapabilitas anggota organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:kadiv.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> kadiv.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+PSDM+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi PSDM 1</h4>
+                                                <p class="position">Staff Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff1.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff1.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+PSDM+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi PSDM 2</h4>
+                                                <p class="position">Staff Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff2.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff2.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 1</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota1.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota1.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 2</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota2.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota2.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 3</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota3.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota3.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+4" alt="Foto Anggota Divisi 4">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 4</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota4.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota4.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+5" alt="Foto Anggota Divisi 5">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 5</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota5.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota5.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+PSDM+6" alt="Foto Anggota Divisi 6">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi PSDM 6</h4>
+                                                <p class="position">Anggota Divisi PSDM</p>
+                                                <p class="bio">Bertugas dalam mendukung program pengembangan sumber daya manusia.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota6.psdm@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota6.psdm@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="division3-kominfo" class="division-single hidden">
+                                    <div class="position-group">
+                                        <h4>Kepala Divisi</h4>
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/2ecc71/ffffff?text=Kadiv+Kominfo" alt="Foto Kepala Divisi Kominfo">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Kepala Divisi Kominfo</h4>
+                                                <p class="position">Kepala Divisi Kominfo</p>
+                                                <p class="bio">Bertanggung jawab atas komunikasi internal dan eksternal organisasi serta pengelolaan informasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:kadiv.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> kadiv.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Staff Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Kominfo+1" alt="Foto Staff Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Kominfo 1</h4>
+                                                <p class="position">Staff Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff1.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff1.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/f39c12/ffffff?text=Staff+Kominfo+2" alt="Foto Staff Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Staff Divisi Kominfo 2</h4>
+                                                <p class="position">Staff Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:staff2.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> staff2.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-group">
+                                        <h4>Anggota Divisi</h4>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Kominfo+1" alt="Foto Anggota Divisi 1">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Kominfo 1</h4>
+                                                <p class="position">Anggota Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota1.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota1.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Kominfo+2" alt="Foto Anggota Divisi 2">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Kominfo 2</h4>
+                                                <p class="position">Anggota Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota2.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota2.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Kominfo+3" alt="Foto Anggota Divisi 3">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Kominfo 3</h4>
+                                                <p class="position">Anggota Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota3.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota3.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-card">
+                                            <div class="member-photo">
+                                                <img src="https://placehold.co/150x150/34495e/ffffff?text=Anggota+Kominfo+4" alt="Foto Anggota Divisi 4">
+                                            </div>
+                                            <div class="member-info">
+                                                <h4>Nama Anggota Divisi Kominfo 4</h4>
+                                                <p class="position">Anggota Divisi Kominfo</p>
+                                                <p class="bio">Bertugas dalam mendukung komunikasi dan pengelolaan informasi organisasi.</p>
+                                                <div class="contact-info">
+                                                    <a href="mailto:anggota4.kominfo@hmpsakuntansi.ac.id" class="contact-link">
+                                                        <i class="fas fa-envelope"></i> anggota4.kominfo@hmpsakuntansi.ac.id
+                                                    </a>
+                                                    <a href="https://wa.me/xxxxxxxxxxx" target="_blank" class="contact-link">
+                                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>HMPS Akuntansi</h3>
+                    <p>Mewujudkan Mahasiswa Akuntansi yang Profesional, Kompetitif, dan Berintegritas</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Link Cepat</h4>
+                    <ul>
+                        <li><a href="../index.html">Beranda</a></li>
+                        <li><a href="about.html">Tentang</a></li>
+                        <li><a href="gallery.html">Galeri</a></li>
+                        <li><a href="team.html">Struktur Organisasi</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Ikuti Kami</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 HMPS Akuntansi. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Fungsi toggle untuk division
+        function toggleDivision(elementId) {
+            const element = document.getElementById(elementId);
+            const button = document.querySelector(`button[onclick="toggleDivision('${elementId}')"]`);
+            const parentContainer = element.closest('.division-content-container');
+
+            if(element) {
+                if(element.classList.contains('hidden') || !element.classList.contains('active')) {
+                    element.classList.remove('hidden');
+                    element.classList.add('active');
+
+                    if(button) {
+                        button.classList.add('active');
+                    }
+
+                    // Periksa apakah ada dua divisi aktif dalam satu container
+                    const activeDivisions = parentContainer.querySelectorAll('.division-single.active');
+                    if(activeDivisions.length >= 2) {
+                        parentContainer.classList.add('two-visible');
+                    }
+                } else {
+                    element.classList.remove('active');
+                    element.classList.add('hidden');
+
+                    if(button) {
+                        button.classList.remove('active');
+                    }
+
+                    // Periksa apakah masih ada dua divisi aktif
+                    const activeDivisions = parentContainer.querySelectorAll('.division-single.active');
+                    if(activeDivisions.length < 2) {
+                        parentContainer.classList.remove('two-visible');
+                    }
+                }
+            }
+        }
+
+        // Fungsi untuk menggulir ke atas halaman
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Fungsi untuk menampilkan/hide tombol scroll to top
+        window.onscroll = function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        };
+
+        // Setelah halaman dimuat, sembunyikan semua divisi
+        document.addEventListener('DOMContentLoaded', function() {
+            // Untuk setiap grup divisi, sembunyikan semua divisi secara default
+            const divisionGroups = ['wadir1', 'wadir2', 'wadir3'];
+
+            divisionGroups.forEach(group => {
+                // Sembunyikan semua divisi dalam grup ini
+                const allDivisions = document.querySelectorAll(`.division-content-container[data-parent="${group}"] .division-single`);
+                allDivisions.forEach(division => {
+                    division.classList.add('hidden');
+                });
+
+                // Hapus kelas active dari semua tombol
+                const allButtons = document.querySelectorAll(`.division-buttons[data-parent="${group}"] button`);
+                allButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+            });
+        });
+    </script>
+
+    <!-- Tombol Scroll to Top -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" onclick="scrollToTop()" title="Kembali ke atas">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Tombol Navigasi Cepat -->
+    <div class="quick-nav">
+        <button class="nav-btn" onclick="scrollToSection('wadir1')" title="Wakil Direktur I">
+            I
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('wadir2')" title="Wakil Direktur II">
+            II
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('wadir3')" title="Wakil Direktur III">
+            III
+        </button>
+    </div>
+
+    <script>
+        // Fungsi untuk menggulir ke bagian tertentu
+        function scrollToSection(sectionId) {
+            let element;
+            switch(sectionId) {
+                case 'wadir1':
+                    element = document.getElementById('wadir1');
+                    break;
+                case 'wadir2':
+                    element = document.getElementById('wadir2');
+                    break;
+                case 'wadir3':
+                    element = document.getElementById('wadir3');
+                    break;
+            }
+
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>
