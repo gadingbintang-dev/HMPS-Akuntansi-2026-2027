@@ -200,6 +200,10 @@ body {
     align-items: center;
 }
 
+.about-text h2 {
+    margin-bottom: 20px;
+}
+
 .about-text p {
     font-size: 1.1rem;
     margin-bottom: 15px;
@@ -453,6 +457,7 @@ body {
     background-color: #FFAF00;
 }
 
+
 .about-full h2 {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -488,6 +493,10 @@ body {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-image-large {
+    margin-top: -600px;
 }
 
 /* Gallery Full Page */
