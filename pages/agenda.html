@@ -122,7 +122,7 @@
         .agenda-card {
             background: white;
             border-radius: 16px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             margin-bottom: 16px;
             display: flex;
@@ -339,12 +339,14 @@
             gap: 8px;
             margin-top: 8px;
             padding-top: 10px;
+            flex-wrap: wrap;
+            align-items: flex-start;
         }
 
         .btn-daftar {
             background: #FFC107;
             color: #1a237e;
-            padding: 7px 16px;
+            padding: 8px 18px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
@@ -354,6 +356,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
         }
 
         .btn-daftar:hover {
@@ -364,7 +367,7 @@
         .btn-info {
             background: #1a237e;
             color: white;
-            padding: 7px 16px;
+            padding: 8px 18px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
@@ -374,11 +377,103 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
         }
 
         .btn-info:hover {
             background: #283593;
             transform: translateY(-2px);
+        }
+
+        /* Dropdown Info Lengkap */
+        .btn-info-wrapper {
+            position: relative;
+            display: inline-flex;
+            vertical-align: top;
+        }
+
+        .btn-info-dropdown {
+            background: #1a237e;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            gap: 6px;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        .btn-info-dropdown:hover {
+            background: #283593;
+            transform: translateY(-2px);
+        }
+
+        .btn-info-dropdown i {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-info-dropdown.active i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            padding: 8px 0;
+            min-width: 180px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-menu a i {
+            width: 16px;
+            text-align: center;
+            color: #1a237e;
         }
 
         /* Right Sidebar */
@@ -678,6 +773,48 @@
 
         .upcoming-info .time i { color: #999; font-size: 0.65rem; }
 
+        /* Disclaimer Box */
+        .disclaimer-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .disclaimer-icon {
+            width: 32px;
+            height: 32px;
+            background: #f57c00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .disclaimer-icon i {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 0 6px 0;
+            color: #e65100;
+        }
+
+        .disclaimer-content p {
+            color: #555;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .agenda-main-grid {
@@ -792,8 +929,16 @@
                             <p class="agenda-description">Kompetisi tahunan bidang akuntansi yang terbuka untuk mahasiswa dari berbagai universitas. Lomba ini mencakup kompetisi case study, quiz akuntansi, dan business plan competition.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <a href="https://forms.google.com/placeholder-acp" class="btn-daftar" target="_blank">Daftar Sekarang</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -828,8 +973,15 @@
                             <p class="agenda-description">Webinar nasional menghadirkan pembicara dari praktisi dan akademisi membahas perkembangan teknologi dalam dunia akuntansi, termasuk AI, blockchain, dan cloud accounting.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -864,8 +1016,15 @@
                             <p class="agenda-description">Kegiatan sosialisasi dan pengenalan profesi akuntansi kepada siswa SMA/SMK di Semarang.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -919,8 +1078,15 @@
                             <p class="agenda-description">Pelatihan untuk sekretaris dan bendahara HMPS Akuntansi mengenai administrasi organisasi dan pengelolaan keuangan.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -928,7 +1094,7 @@
                     <!-- Agenda Card 5: Baksos -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
-                            <span class="day">15</span>
+                            <span class="day">14</span>
                             <span class="month">MARET</span>
                             <span class="year">2026</span>
                         </div>
@@ -945,18 +1111,25 @@
                                 </div>
                                 <div class="meta-pill">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Panti Asuhan Al-Hidayah, Semarang</span>
+                                    <span>Panti Asuhan Al-Huda, Semarang</span>
                                 </div>
                             </div>
                             <div class="agenda-countdown">
                                 <i class="fas fa-calendar-alt"></i>
                                 <span class="countdown-days">-</span>
                             </div>
-                            <p class="agenda-description">Kegiatan bakti sosial di panti asuhan berupa pemberian santunan, alat tulis, dan bermain bersama anak-anak panti.</p>
+                            <p class="agenda-description">Kegiatan bakti sosial di panti asuhan berupa pemberian sembako, sabun cuci, uang tunai, serta kebutuhan lainnya untuk anak panti.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -964,8 +1137,8 @@
                     <!-- Agenda Card 6: Open Recruitment -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
-                            <span class="day">01</span>
-                            <span class="month">JULI</span>
+                            <span class="day">05</span>
+                            <span class="month">DESEMBER</span>
                             <span class="year">2026</span>
                         </div>
                         <div class="agenda-card-content">
@@ -991,8 +1164,15 @@
                             <p class="agenda-description">Penerimaan anggota baru HMPS Akuntansi untuk periode 2026/2027. Terbuka untuk semua mahasiswa Akuntansi UNISBANK.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1000,8 +1180,8 @@
                     <!-- Agenda Card 7: MUBES -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
-                            <span class="day">15</span>
-                            <span class="month">JULI</span>
+                            <span class="day">12</span>
+                            <span class="month">DESEMBER</span>
                             <span class="year">2026</span>
                         </div>
                         <div class="agenda-card-content">
@@ -1027,8 +1207,15 @@
                             <p class="agenda-description">Forum tertinggi HMPS Akuntansi untuk evaluasi program kerja, pemilihan ketua baru, dan penetapan arah kebijakan organisasi.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1036,8 +1223,8 @@
                     <!-- Agenda Card 8: Olahraga Bareng -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
-                            <span class="day">02</span>
-                            <span class="month">AGUSTUS</span>
+                            <span class="day">09</span>
+                            <span class="month">JUNI</span>
                             <span class="year">2026</span>
                         </div>
                         <div class="agenda-card-content">
@@ -1063,8 +1250,16 @@
                             <p class="agenda-description">Kegiatan olahraga bersama untuk menjaga kesehatan dan mempererat solidaritas antar anggota HMPS Akuntansi.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <a href="https://forms.google.com/placeholder-olahraga" class="btn-daftar" target="_blank">Daftar Sekarang</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1081,7 +1276,7 @@
                                 <i class="fas fa-users"></i>
                                 KEGIATAN INTERNAL
                             </span>
-                            <h3 class="agenda-card-title">Buka Bersama Anggota</h3>
+                            <h3 class="agenda-card-title">Buka Bersama & Gathering</h3>
                             <div class="agenda-meta">
                                 <div class="meta-pill">
                                     <i class="fas fa-clock"></i>
@@ -1089,7 +1284,7 @@
                                 </div>
                                 <div class="meta-pill">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Restaurant dekat kampus</span>
+                                    <span>Cafe dSky, Semarang</span>
                                 </div>
                             </div>
                             <div class="agenda-countdown">
@@ -1099,8 +1294,15 @@
                             <p class="agenda-description">Kegiatan buka puasa bersama untuk mempererat silaturahmi antar anggota HMPS Akuntansi.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1108,8 +1310,8 @@
                     <!-- Agenda Card 10: Akuntansi Barbar -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
-                            <span class="day">05</span>
-                            <span class="month">SEPTEMBER</span>
+                            <span class="day">09</span>
+                            <span class="month">MEI</span>
                             <span class="year">2026</span>
                         </div>
                         <div class="agenda-card-content">
@@ -1135,8 +1337,16 @@
                             <p class="agenda-description">Kegiatan belajar bersama menjelang UTS/UAS untuk membantu mahasiswa memahami materi akuntansi dengan lebih baik.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <a href="https://forms.google.com/placeholder-barbar" class="btn-daftar" target="_blank">Daftar Sekarang</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1171,13 +1381,20 @@
                             <p class="agenda-description">Kunjungan ke universitas mitra untuk bertukar pengalaman dan memperluas jaringan organisasi mahasiswa.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Agenda Card 12: Rapat Besar -->
+                    <!-- Agenda Card 12: Rapat Besar 1 -->
                     <div class="agenda-card progit">
                         <div class="agenda-date-panel progit">
                             <span class="day">17</span>
@@ -1189,7 +1406,7 @@
                                 <i class="fas fa-users"></i>
                                 KEGIATAN INTERNAL
                             </span>
-                            <h3 class="agenda-card-title">Rapat Besar Anggota</h3>
+                            <h3 class="agenda-card-title">Rapat Besar 1</h3>
                             <div class="agenda-meta">
                                 <div class="meta-pill">
                                     <i class="fas fa-clock"></i>
@@ -1197,7 +1414,7 @@
                                 </div>
                                 <div class="meta-pill">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Aula FEB UNISBANK</span>
+                                    <span>Gedung D6.1 FEB UNISBANK</span>
                                 </div>
                             </div>
                             <div class="agenda-countdown">
@@ -1207,8 +1424,58 @@
                             <p class="agenda-description">Rapat besar seluruh anggota HMPS Akuntansi untuk membahas program kerja dan evaluasi tengah periode.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
-                                <a href="#" class="btn-info">Info Lengkap</a>
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agenda Card 13: Rapat Besar 2 -->
+                    <div class="agenda-card progit">
+                        <div class="agenda-date-panel progit">
+                            <span class="day">10</span>
+                            <span class="month">JULI</span>
+                            <span class="year">2026</span>
+                        </div>
+                        <div class="agenda-card-content">
+                            <span class="category-badge progit">
+                                <i class="fas fa-users"></i>
+                                KEGIATAN INTERNAL
+                            </span>
+                            <h3 class="agenda-card-title">Rapat Besar 2</h3>
+                            <div class="agenda-meta">
+                                <div class="meta-pill">
+                                    <i class="fas fa-clock"></i>
+                                    <span>10:00 - 14:00 WIB</span>
+                                </div>
+                                <div class="meta-pill">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Gedung D.6.1 FEB UNISBANK</span>
+                                </div>
+                            </div>
+                            <div class="agenda-countdown">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="countdown-days">-</span>
+                            </div>
+                            <p class="agenda-description">Rapat besar lanjutan seluruh anggota HMPS Akuntansi untuk pembahasan program kerja dan evaluasi periode berikutnya.</p>
+                            <span class="status-badge">AKAN DATANG</span>
+                            <div class="agenda-actions">
+                                <div class="btn-info-wrapper">
+                                    <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
+                                        Info Lengkap <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="https://www.instagram.com/hmpsakunisbank?igsh=azh2Zmdtc2JjMTdm" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="https://wa.me/+6282324231803" target="_blank"><i class="fab fa-whatsapp"></i> Kontak Humas</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1241,7 +1508,7 @@
                             <i class="fas fa-list"></i>
                             Semua
                         </span>
-                        <span class="count" id="count-all">12</span>
+                        <span class="count" id="count-all">13</span>
                     </button>
                     <button class="filter-btn" data-filter="proker">
                         <span>
@@ -1255,8 +1522,21 @@
                             <i class="fas fa-heart"></i>
                             Progit
                         </span>
-                        <span class="count" id="count-progit">9</span>
+                        <span class="count" id="count-progit">10</span>
                     </button>
+                </div>
+
+                <!-- Disclaimer Section -->
+                <div class="sidebar-card disclaimer-section">
+                    <div class="disclaimer-box">
+                        <div class="disclaimer-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="disclaimer-content">
+                            <h4>Disclaimer</h4>
+                            <p>Jadwal kegiatan dapat berubah sewaktu-waktu berdasarkan hasil rapat dan keputusan pengurus, menyesuaikan dengan situasi dan kondisi yang ada.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Calendar Section -->
@@ -1878,15 +2158,15 @@
                 description: 'Pelatihan untuk sekretaris dan bendahara HMPS Akuntansi mengenai administrasi organisasi dan pengelolaan keuangan.'
             },
             {
-                date: new Date(2026, 2, 15),  // 15 Maret 2026
+                date: new Date(2026, 2, 14),  // 14 Maret 2026
                 type: 'progit',
                 name: 'Bakti Sosial Panti Asuhan',
                 time: '08:00 - 12:00 WIB',
-                location: 'Panti Asuhan Al-Hidayah, Semarang',
-                description: 'Kegiatan bakti sosial di panti asuhan berupa pemberian santunan, alat tulis, dan bermain bersama anak-anak panti.'
+                location: 'Panti Asuhan Al-Huda, Semarang',
+                description: 'Kegiatan bakti sosial di panti asuhan berupa pemberian sembako, sabun cuci, uang tunai, serta kebutuhan lainnya untuk anak panti'
             },
             {
-                date: new Date(2026, 6, 1),
+                date: new Date(2026, 11, 5),  // 5 Desember 2026
                 type: 'progit',
                 name: 'Open Recruitment Anggota Baru',
                 time: '08:00 - 16:00 WIB',
@@ -1894,7 +2174,7 @@
                 description: 'Penerimaan anggota baru HMPS Akuntansi untuk periode 2026/2027. Terbuka untuk semua mahasiswa Akuntansi UNISBANK.'
             },
             {
-                date: new Date(2026, 6, 15),
+                date: new Date(2026, 11, 12),  // 12 Desember 2026
                 type: 'progit',
                 name: 'Musyawarah Besar (MUBES)',
                 time: '08:00 - 15:00 WIB',
@@ -1902,7 +2182,7 @@
                 description: 'Forum tertinggi HMPS Akuntansi untuk evaluasi program kerja, pemilihan ketua baru, dan penetapan arah kebijakan organisasi.'
             },
             {
-                date: new Date(2026, 7, 2),
+                date: new Date(2026, 5, 9),  // 9 Juni 2026
                 type: 'progit',
                 name: 'Olahraga Bareng (Badminton)',
                 time: '16:00 - 18:00 WIB',
@@ -1912,13 +2192,13 @@
             {
                 date: new Date(2026, 2, 12),  // 12 Maret 2026
                 type: 'progit',
-                name: 'Buka Bersama Anggota',
+                name: 'Buka Bersama & Gathering',
                 time: '17:00 - 20:00 WIB',
-                location: 'Restaurant dekat kampus',
+                location: 'Cafe dSky, Semarang',
                 description: 'Kegiatan buka puasa bersama untuk mempererat silaturahmi antar anggota HMPS Akuntansi.'
             },
             {
-                date: new Date(2026, 8, 5),
+                date: new Date(2026, 4, 9),  // 9 Mei 2026
                 type: 'progit',
                 name: 'Akuntansi Barbar (Belajar Bareng)',
                 time: '13:00 - 17:00 WIB',
@@ -1936,10 +2216,18 @@
             {
                 date: new Date(2026, 0, 17),  // 17 Januari 2026 - TELAH BERLALU
                 type: 'progit',
-                name: 'Rapat Besar Anggota',
+                name: 'Rapat Besar 1',
                 time: '10:00 - 14:00 WIB',
-                location: 'Aula FEB UNISBANK',
+                location: 'Gedung D6.1 FEB UNISBANK',
                 description: 'Rapat besar seluruh anggota HMPS Akuntansi untuk membahas program kerja dan evaluasi tengah periode.'
+            },
+            {
+                date: new Date(2026, 6, 10),  // 10 Juli 2026
+                type: 'progit',
+                name: 'Rapat Besar 2',
+                time: '10:00 - 14:00 WIB',
+                location: 'Gedung D.6.1 FEB UNISBANK',
+                description: 'Rapat besar lanjutan seluruh anggota HMPS Akuntansi untuk pembahasan program kerja dan evaluasi periode berikutnya.'
             }
         ];
 
@@ -1964,6 +2252,35 @@
         updateFilterCounts();
 
         // ============================================
+        // TOGGLE DROPDOWN INFO LENGKAP
+        // ============================================
+        function toggleDropdown(button) {
+            event.stopPropagation();
+            const wrapper = button.closest('.btn-info-wrapper');
+            const dropdown = wrapper.querySelector('.dropdown-menu');
+            
+            // Tutup semua dropdown lain
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                if (menu !== dropdown) {
+                    menu.classList.remove('show');
+                    menu.previousElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Toggle dropdown ini
+            dropdown.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Tutup dropdown jika klik di luar
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                menu.classList.remove('show');
+                menu.previousElementSibling.classList.remove('active');
+            });
+        });
+
+        // ============================================
         // HANDLE ACTION BUTTONS (Daftar & Info)
         // ============================================
         function handleActionButton(event, actionType) {
@@ -1981,17 +2298,10 @@
         // Add event listeners to all action buttons
         document.addEventListener('DOMContentLoaded', function() {
             const daftarButtons = document.querySelectorAll('.btn-daftar');
-            const infoButtons = document.querySelectorAll('.btn-info');
-            
+
             daftarButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     handleActionButton(e, 'daftar');
-                });
-            });
-            
-            infoButtons.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    handleActionButton(e, 'info');
                 });
             });
         });
