@@ -394,10 +394,46 @@
             gap: 10px;
         }
 
+        .search-toggle-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #11225B;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .search-toggle-btn:hover {
+            background-color: #FFAF00;
+            color: #11225B;
+            transform: scale(1.1);
+        }
+
+        .search-toggle-btn.active {
+            background-color: #FFAF00;
+            color: #11225B;
+        }
+
         .sidebar-search {
             position: relative;
             width: 250px;
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+        }
+
+        .sidebar-search.visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
         }
 
         .sidebar-search input {
@@ -1448,9 +1484,12 @@
 
     <!-- Search Bar di Sidebar -->
     <div class="sidebar-search-container">
-        <div class="sidebar-search">
+        <button class="search-toggle-btn" id="searchToggleBtn" title="Cari anggota">
+            <i class="fas fa-search"></i>
+        </button>
+        <div class="sidebar-search" id="sidebarSearch">
             <input type="text" id="teamSearch" placeholder="Cari anggota..." autocomplete="off">
-            <i class="fas fa-search search-icon" id="searchIcon"></i>
+            <i class="fas fa-times search-icon" id="searchCloseIcon"></i>
         </div>
         <div class="search-results" id="searchResults"></div>
     </div>
@@ -1493,36 +1532,62 @@
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('teamSearch');
             const searchResults = document.getElementById('searchResults');
-            const searchIcon = document.getElementById('searchIcon');
+            const sidebarSearch = document.getElementById('sidebarSearch');
+            const searchToggleBtn = document.getElementById('searchToggleBtn');
+            const searchCloseIcon = document.getElementById('searchCloseIcon');
+
+            // Toggle search bar
+            searchToggleBtn.addEventListener('click', function() {
+                sidebarSearch.classList.toggle('visible');
+                searchToggleBtn.classList.toggle('active');
+                
+                if (sidebarSearch.classList.contains('visible')) {
+                    searchInput.focus();
+                } else {
+                    searchInput.value = '';
+                    searchResults.classList.remove('active');
+                }
+            });
+
+            // Close search bar
+            searchCloseIcon.addEventListener('click', function() {
+                sidebarSearch.classList.remove('visible');
+                searchToggleBtn.classList.remove('active');
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+            });
 
             // Kumpulkan semua member-card
             function collectMembers() {
                 const members = [];
                 const memberCards = document.querySelectorAll('.member-card');
-                
+
                 memberCards.forEach(card => {
                     const nameElement = card.querySelector('h4');
                     const positionElement = card.querySelector('.position');
                     const bioElement = card.querySelector('.bio');
-                    
+
                     if (nameElement && positionElement) {
                         const name = nameElement.textContent.trim();
                         const position = positionElement.textContent.trim();
                         const bio = bioElement ? bioElement.textContent.trim() : '';
-                        
-                        // Cari section terdekat untuk scroll
-                        const section = card.closest('.position-group, .division-single');
-                        
+
+                        // Cari division-single terdekat (untuk anggota divisi)
+                        const divisionSingle = card.closest('.division-single');
+                        // Cari position-group terdekat (untuk jabatan utama)
+                        const positionGroup = card.closest('.position-group');
+
                         members.push({
                             name: name,
                             position: position,
                             bio: bio,
                             element: card,
-                            section: section
+                            divisionSingle: divisionSingle,
+                            positionGroup: positionGroup
                         });
                     }
                 });
-                
+
                 return members;
             }
 
@@ -1534,14 +1599,46 @@
                     const searchIn = (member.name + ' ' + member.position + ' ' + member.bio).toLowerCase();
                     return searchIn.includes(query.toLowerCase());
                 });
-                
+
                 return filtered;
+            }
+
+            // Fungsi untuk membuka division yang tertutup
+            function openDivisionIfNeeded(divisionSingle) {
+                if (!divisionSingle) return;
+
+                // Jika division dalam keadaan hidden, buka
+                if (divisionSingle.classList.contains('hidden')) {
+                    const parentContainer = divisionSingle.closest('.division-content-container');
+                    const parentButtons = parentContainer?.closest('.division-split-container')?.querySelector('.division-buttons');
+                    
+                    // Cari tombol yang sesuai dengan division ini
+                    const divisionId = divisionSingle.id;
+                    const targetButton = parentButtons?.querySelector(`button[onclick="toggleDivision('${divisionId}')"]`);
+
+                    // Buka division
+                    divisionSingle.classList.remove('hidden');
+                    divisionSingle.classList.add('active');
+
+                    // Aktifkan tombol
+                    if (targetButton) {
+                        targetButton.classList.add('active');
+                    }
+
+                    // Set container menjadi two-visible jika ada 2 division aktif
+                    if (parentContainer) {
+                        const activeDivisions = parentContainer.querySelectorAll('.division-single.active');
+                        if (activeDivisions.length >= 2) {
+                            parentContainer.classList.add('two-visible');
+                        }
+                    }
+                }
             }
 
             // Tampilkan hasil pencarian
             function displayResults(results) {
                 searchResults.innerHTML = '';
-                
+
                 if (results.length === 0) {
                     searchResults.innerHTML = '<div class="no-results">Tidak ditemukan</div>';
                 } else {
@@ -1552,30 +1649,33 @@
                             <div class="name">${member.name}</div>
                             <div class="position">${member.position}</div>
                         `;
-                        
+
                         item.addEventListener('click', function() {
-                            // Scroll ke member card
-                            member.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            
-                            // Highlight sementara
-                            member.element.style.transition = 'all 0.3s';
-                            member.element.style.boxShadow = '0 0 20px rgba(255, 175, 0, 0.5)';
-                            member.element.style.transform = 'scale(1.02)';
-                            
+                            // Buka division jika tertutup
+                            openDivisionIfNeeded(member.divisionSingle);
+
+                            // Scroll ke member card dengan sedikit delay agar division sudah terbuka
                             setTimeout(() => {
-                                member.element.style.boxShadow = '';
-                                member.element.style.transform = '';
-                            }, 2000);
-                            
-                            // Tutup hasil pencarian
+                                member.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                                member.element.style.transition = 'all 0.3s';
+                                member.element.style.boxShadow = '0 0 20px rgba(255, 175, 0, 0.5)';
+                                member.element.style.transform = 'scale(1.02)';
+
+                                setTimeout(() => {
+                                    member.element.style.boxShadow = '';
+                                    member.element.style.transform = '';
+                                }, 2000);
+                            }, 100);
+
                             searchResults.classList.remove('active');
                             searchInput.value = '';
                         });
-                        
+
                         searchResults.appendChild(item);
                     });
                 }
-                
+
                 if (results.length > 0) {
                     searchResults.classList.add('active');
                 } else {
@@ -1586,21 +1686,12 @@
             // Event listener untuk input
             searchInput.addEventListener('input', function() {
                 const query = this.value.trim();
-                
+
                 if (query.length > 0) {
                     const results = searchMembers(query);
                     displayResults(results);
                 } else {
                     searchResults.classList.remove('active');
-                }
-            });
-
-            // Event listener untuk icon search
-            searchIcon.addEventListener('click', function() {
-                const query = searchInput.value.trim();
-                if (query.length > 0) {
-                    const results = searchMembers(query);
-                    displayResults(results);
                 }
             });
 
@@ -1745,6 +1836,7 @@
         </button>
     </div>
 
+    <script src="../js/script.js"></script>
     <script>
         // Fungsi untuk menggulir ke bagian tertentu
         function scrollToSection(sectionId) {
@@ -1766,112 +1858,76 @@
             }
         }
 
-        // Fungsi Search Anggota
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('teamSearch');
-            const searchResults = document.getElementById('searchResults');
-            const searchIcon = document.getElementById('searchIcon');
+        // Fungsi toggle untuk division
+        function toggleDivision(elementId) {
+            const element = document.getElementById(elementId);
+            const button = document.querySelector(`button[onclick="toggleDivision('${elementId}')"]`);
+            const parentContainer = element.closest('.division-content-container');
 
-            // Kumpulkan semua member-card
-            function collectMembers() {
-                const members = [];
-                const memberCards = document.querySelectorAll('.member-card');
-                
-                memberCards.forEach(card => {
-                    const nameElement = card.querySelector('h4');
-                    const positionElement = card.querySelector('.position');
-                    const bioElement = card.querySelector('.bio');
-                    
-                    if (nameElement && positionElement) {
-                        const name = nameElement.textContent.trim();
-                        const position = positionElement.textContent.trim();
-                        const bio = bioElement ? bioElement.textContent.trim() : '';
-                        
-                        members.push({
-                            name: name,
-                            position: position,
-                            bio: bio,
-                            element: card
-                        });
+            if(element) {
+                if(element.classList.contains('hidden') || !element.classList.contains('active')) {
+                    element.classList.remove('hidden');
+                    element.classList.add('active');
+
+                    if(button) {
+                        button.classList.add('active');
                     }
-                });
-                
-                return members;
-            }
 
-            const allMembers = collectMembers();
-
-            // Fungsi pencarian
-            function searchMembers(query) {
-                const filtered = allMembers.filter(member => {
-                    const searchIn = (member.name + ' ' + member.position + ' ' + member.bio).toLowerCase();
-                    return searchIn.includes(query.toLowerCase());
-                });
-                
-                return filtered;
-            }
-
-            // Tampilkan hasil pencarian
-            function displayResults(results) {
-                searchResults.innerHTML = '';
-                
-                if (results.length === 0) {
-                    searchResults.innerHTML = '<div class="no-results">Tidak ditemukan</div>';
+                    // Periksa apakah ada dua divisi aktif dalam satu container
+                    const activeDivisions = parentContainer.querySelectorAll('.division-single.active');
+                    if(activeDivisions.length >= 2) {
+                        parentContainer.classList.add('two-visible');
+                    }
                 } else {
-                    results.forEach(member => {
-                        const item = document.createElement('div');
-                        item.className = 'search-result-item';
-                        item.innerHTML = `
-                            <div class="name">${member.name}</div>
-                            <div class="position">${member.position}</div>
-                        `;
-                        
-                        item.addEventListener('click', function() {
-                            member.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            
-                            member.element.style.transition = 'all 0.3s';
-                            member.element.style.boxShadow = '0 0 20px rgba(255, 175, 0, 0.5)';
-                            member.element.style.transform = 'scale(1.02)';
-                            
-                            setTimeout(() => {
-                                member.element.style.boxShadow = '';
-                                member.element.style.transform = '';
-                            }, 2000);
-                            
-                            searchResults.classList.remove('active');
-                            searchInput.value = '';
-                        });
-                        
-                        searchResults.appendChild(item);
-                    });
+                    element.classList.remove('active');
+                    element.classList.add('hidden');
+
+                    if(button) {
+                        button.classList.remove('active');
+                    }
+
+                    // Periksa apakah masih ada dua divisi aktif
+                    const activeDivisions = parentContainer.querySelectorAll('.division-single.active');
+                    if(activeDivisions.length < 2) {
+                        parentContainer.classList.remove('two-visible');
+                    }
                 }
-                
-                searchResults.classList.add('active');
             }
+        }
 
-            searchInput.addEventListener('input', function() {
-                const query = this.value.trim();
-                
-                if (query.length > 0) {
-                    const results = searchMembers(query);
-                    displayResults(results);
-                } else {
-                    searchResults.classList.remove('active');
-                }
-            });
+        // Fungsi untuk menggulir ke atas halaman
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            searchIcon.addEventListener('click', function() {
-                const query = searchInput.value.trim();
-                if (query.length > 0) {
-                    const results = searchMembers(query);
-                    displayResults(results);
-                }
-            });
+        // Fungsi untuk menampilkan/hide tombol scroll to top
+        window.onscroll = function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.sidebar-search-container')) {
-                    searchResults.classList.remove('active');
-                }
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        };
+
+        // Setelah halaman dimuat, sembunyikan semua divisi
+        document.addEventListener('DOMContentLoaded', function() {
+            // Untuk setiap grup divisi, sembunyikan semua divisi secara default
+            const divisionGroups = ['wadir1', 'wadir2', 'wadir3'];
+
+            divisionGroups.forEach(group => {
+                // Sembunyikan semua divisi dalam grup ini
+                const allDivisions = document.querySelectorAll(`.division-content-container[data-parent="${group}"] .division-single`);
+                allDivisions.forEach(division => {
+                    division.classList.add('hidden');
+                });
+
+                // Hapus kelas active dari semua tombol
+                const allButtons = document.querySelectorAll(`.division-buttons[data-parent="${group}"] button`);
+                allButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
             });
         });
     </script>
