@@ -3488,7 +3488,7 @@ body {
     .agenda-full h1 {
         font-size: 2rem;
     }
-}
+
 
 @media screen and (max-width: 480px) {
     .agenda-content {
