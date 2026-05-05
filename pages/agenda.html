@@ -929,7 +929,7 @@
                             <p class="agenda-description">Kompetisi akuntansi tahunan yang terbuka untuk seluruh siswa dan siswi SMA/SMK/Sederajat di wilayah Jawa Tengah dan DIY. Lomba ini meliputi beberapa tahap, yaitu kuis akuntansi, penyusunan siklus/alur akuntansi, serta penyelesaian studi kasus.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
-                                <a href="#" class="btn-daftar" target="_blank">Daftar Sekarang</a>
+                                <a href="https://bit.ly/PendaftaranACPXXIV2026" class="btn-daftar" target="_blank">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -2284,8 +2284,16 @@
         // HANDLE ACTION BUTTONS (Daftar & Info)
         // ============================================
         function handleActionButton(event, actionType) {
+            const btn = event.currentTarget;
+            const href = btn.getAttribute('href');
+            
+            // Jika href bukan '#' dan ada isinya, biarkan link berjalan normal
+            if (href && href !== '#') {
+                return; 
+            }
+
             event.preventDefault();
-            const card = event.target.closest('.agenda-card');
+            const card = btn.closest('.agenda-card');
             const eventTitle = card.querySelector('.agenda-card-title').textContent;
             
             if (actionType === 'daftar') {
