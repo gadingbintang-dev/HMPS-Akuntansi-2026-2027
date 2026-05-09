@@ -973,6 +973,7 @@
                             <p class="agenda-description">Webinar nasional menghadirkan pembicara dari praktisi dan akademisi membahas perkembangan teknologi dalam dunia akuntansi, termasuk AI, blockchain, dan cloud accounting.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1016,6 +1017,7 @@
                             <p class="agenda-description">Kegiatan sosialisasi dan pengenalan profesi akuntansi kepada siswa SMA/SMK di Semarang.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1078,6 +1080,7 @@
                             <p class="agenda-description">Pelatihan untuk sekretaris dan bendahara HMPS Akuntansi mengenai administrasi organisasi dan pengelolaan keuangan.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1121,6 +1124,7 @@
                             <p class="agenda-description">Kegiatan bakti sosial di panti asuhan berupa pemberian sembako, sabun cuci, uang tunai, serta kebutuhan lainnya untuk anak panti.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1164,6 +1168,7 @@
                             <p class="agenda-description">Penerimaan anggota baru HMPS Akuntansi untuk periode 2026/2027. Terbuka untuk semua mahasiswa Akuntansi UNISBANK.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1207,6 +1212,7 @@
                             <p class="agenda-description">Forum tertinggi HMPS Akuntansi untuk evaluasi program kerja, pemilihan ketua baru, dan penetapan arah kebijakan organisasi.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1294,6 +1300,7 @@
                             <p class="agenda-description">Kegiatan buka puasa bersama untuk mempererat silaturahmi antar anggota HMPS Akuntansi.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1381,6 +1388,7 @@
                             <p class="agenda-description">Kunjungan ke universitas mitra untuk bertukar pengalaman dan memperluas jaringan organisasi mahasiswa.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1424,6 +1432,7 @@
                             <p class="agenda-description">Rapat besar seluruh anggota HMPS Akuntansi untuk membahas program kerja dan evaluasi tengah periode.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -1467,6 +1476,7 @@
                             <p class="agenda-description">Rapat besar lanjutan seluruh anggota HMPS Akuntansi untuk pembahasan program kerja dan evaluasi periode berikutnya.</p>
                             <span class="status-badge">AKAN DATANG</span>
                             <div class="agenda-actions">
+                                <a href="#" class="btn-daftar">Daftar Sekarang</a>
                                 <div class="btn-info-wrapper">
                                     <button class="btn-info-dropdown" onclick="toggleDropdown(this)">
                                         Info Lengkap <i class="fas fa-chevron-down"></i>
@@ -2287,9 +2297,9 @@
             const btn = event.currentTarget;
             const href = btn.getAttribute('href');
             
-            // Jika href bukan '#' dan ada isinya, biarkan link berjalan normal
-            if (href && href !== '#') {
-                return; 
+            // Jika href adalah link aktif (bukan '#' dan tidak mengandung 'placeholder'), biarkan link berjalan normal
+            if (href && href !== '#' && !href.includes('placeholder')) {
+                return;
             }
 
             event.preventDefault();
@@ -2297,7 +2307,7 @@
             const eventTitle = card.querySelector('.agenda-card-title').textContent;
             
             if (actionType === 'daftar') {
-                alert(`Terima kasih atas minat Anda untuk "${eventTitle}"!\n\nFormulir pendaftaran akan segera tersedia. Silakan hubungi kontak kami atau ikuti media sosial HMPS Akuntansi untuk informasi lebih lanjut.`);
+                alert("Pendaftaran belum dibuka, Mohon bersabar yaa ^_^");
             } else if (actionType === 'info') {
                 alert(`Informasi Lengkap: "${eventTitle}"\n\nUntuk informasi detail tentang acara ini, silakan hubungi kontak kami atau kunjungi media sosial HMPS Akuntansi.`);
             }
